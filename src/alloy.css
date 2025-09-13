@@ -1,0 +1,343 @@
+
+/* Alloy Calculator Styles */
+.alloy-calculator {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.alloy-selector-section {
+    margin-bottom: 30px;
+}
+
+.alloy-select {
+    width: 100%;
+    max-width: 400px;
+    padding: 12px 15px;
+    background-color: var(--input-bg);
+    border: 2px solid var(--border-color);
+    border-radius: 3px;
+    color: var(--text-color);
+    font-family: 'VT323', monospace;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.alloy-select:hover {
+    border-color: var(--accent-color);
+}
+
+.alloy-select:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 10px rgba(133, 106, 62, 0.3);
+}
+
+.calculator-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.metal-controls {
+    background-color: var(--terminal-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 3px;
+    padding: 20px;
+    position: relative;
+}
+
+.metal-controls:before {
+    content: 'МЕТАЛЛЫ';
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    background-color: var(--terminal-bg);
+    padding: 0 10px;
+    font-size: 14px;
+    color: var(--text-highlight);
+    border: 1px solid var(--border-color);
+}
+
+.metal-controls h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+
+.metal-sliders {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.metal-slider-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background-color: var(--panel-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 3px;
+}
+
+.metal-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 120px;
+}
+
+.metal-img {
+    width: 48px;
+    height: 48px;
+    image-rendering: pixelated;
+}
+
+.metal-name {
+    font-weight: bold;
+    color: var(--text-highlight);
+}
+
+.slider-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex: 1;
+}
+
+.percentage-display {
+    min-width: 50px;
+    text-align: center;
+    font-weight: bold;
+    color: var(--accent-color);
+    font-size: 20px;
+}
+
+.result-section {
+    background-color: var(--terminal-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 3px;
+    padding: 20px;
+    position: relative;
+}
+
+.result-section:before {
+    content: 'РЕЗУЛЬТАТ';
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    background-color: var(--terminal-bg);
+    padding: 0 10px;
+    font-size: 14px;
+    color: var(--text-highlight);
+    border: 1px solid var(--border-color);
+}
+
+.result-section h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+
+.alloy-result {
+    margin-bottom: 25px;
+}
+
+.alloy-image {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.alloy-img {
+    width: 128px;
+    height: 128px;
+    image-rendering: pixelated;
+    margin-bottom: 10px;
+}
+
+.alloy-name {
+    font-weight: bold;
+    color: var(--text-highlight);
+    font-size: 20px;
+    text-shadow: 1px 1px 2px var(--shadow-color);
+}
+
+.ingot-controls {
+    text-align: center;
+}
+
+.ingot-controls label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+.ingot-input-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.ingot-input-group span {
+    font-weight: bold;
+    color: var(--accent-color);
+    min-width: 30px;
+}
+
+.ingot-slider-container {
+    width: 200px;
+}
+
+.slider-wrapper {
+    flex: 1;
+    min-width: 150px;
+}
+
+.current-count {
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--text-highlight);
+}
+
+.crucible-section {
+    margin-top: 20px;
+}
+
+.crucible-section h4 {
+    margin-bottom: 15px;
+    color: var(--accent-color);
+    font-size: 18px;
+    text-align: center;
+}
+
+.crucible-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.crucible-slot {
+    aspect-ratio: 1;
+    border: 2px solid var(--border-color);
+    border-radius: 3px;
+    background-color: var(--panel-bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: all 0.3s ease;
+    min-height: 120px;
+}
+
+.crucible-slot.filled {
+    border-color: var(--accent-color);
+    background-color: var(--terminal-bg);
+    box-shadow: 0 0 10px rgba(133, 106, 62, 0.3);
+}
+
+.crucible-image {
+    margin-bottom: 5px;
+}
+
+.crucible-nugget-img {
+    width: 80px;
+    height: 80px;
+    image-rendering: pixelated;
+}
+
+.crucible-count {
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--text-highlight);
+    text-shadow: 1px 1px 2px var(--shadow-color);
+}
+
+.error-message {
+    background-color: rgba(139, 46, 46, 0.2);
+    border: 1px solid var(--error-color);
+    border-left: 4px solid var(--error-color);
+    border-radius: 3px;
+    padding: 15px;
+    margin-top: 20px;
+    color: var(--text-highlight);
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Mobile Responsiveness for Alloy Calculator */
+@media (max-width: 768px) {
+    .calculator-section {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .metal-slider-container {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+    
+    .metal-info {
+        justify-content: center;
+        min-width: auto;
+    }
+    
+    .slider-controls {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .slider-wrapper {
+        width: 200px;
+        min-width: 200px;
+    }
+    
+    .crucible-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+    
+    .crucible-slot {
+        min-height: 140px;
+    }
+    
+    .ingot-slider-container {
+        width: 150px;
+    }
+    
+    .alloy-select {
+        font-size: 16px;
+        padding: 10px 12px;
+    }
+}
+
+/* Metal Tooltip Styles */
+.metal-tooltip {
+    position: absolute;
+    background-color: var(--panel-bg);
+    border: 2px solid var(--accent-color);
+    border-radius: 5px;
+    padding: 10px 15px;
+    color: var(--text-color);
+    font-family: 'VT323', monospace;
+    font-size: 16px;
+    z-index: 10000;
+    box-shadow: 3px 3px 15px var(--shadow-color);
+    max-width: 300px;
+    word-wrap: break-word;
+    pointer-events: none;
+}
+
+.metal-tooltip h3 {
+    color: var(--text-highlight);
+    margin: 8px 0 5px 0;
+    font-size: 18px;
+    font-family: 'Special Elite', cursive;
+}
