@@ -21,6 +21,7 @@ export class Header {
                             <a href="#" class="nav-link dropdown-toggle">Полезное</a>
                             <ul class="dropdown-menu">
                                 <li><a href="/news" class="nav-link" data-page="news">Новости</a></li>
+								<li><a href="/articles" class="nav-link" data-page="articles">Статьи</a></li>
                                 <li><a href="/mods" class="nav-link" data-page="mods">Моды</a></li>
                                 <li><a href="/alloy-calculator" class="nav-link" data-page="alloy-calculator">Калькулятор</a></li>
                             </ul>

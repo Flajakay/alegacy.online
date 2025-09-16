@@ -1,5 +1,7 @@
 export const articlesIndex = [
-    "winter-rescue",
-    "server-guide"
+    "karma-system",
+    "server-guide",
+	"winter-rescue"
+
 
 	];

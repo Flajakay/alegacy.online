@@ -153,6 +153,29 @@ export class ArticlePage {
         img.alt = alt;
         img.className = 'article-image';
 
+        const isMobile = window.innerWidth <= 768;
+
+        if (!isMobile && alt) {
+            const tooltip = document.createElement('div');
+            tooltip.className = 'image-tooltip';
+            tooltip.textContent = alt;
+            container.appendChild(tooltip);
+
+            img.addEventListener('mouseenter', () => {
+                tooltip.style.opacity = '1';
+                tooltip.style.visibility = 'visible';
+            });
+
+            img.addEventListener('mouseleave', () => {
+                tooltip.style.opacity = '0';
+                tooltip.style.visibility = 'hidden';
+            });
+        }
+
+        img.addEventListener('click', () => {
+            this.openImageLightbox(src, alt);
+        });
+
         container.appendChild(img);
         return container;
     }
@@ -175,7 +198,7 @@ export class ArticlePage {
 
             // Add click handler for lightbox effect
             img.addEventListener('click', () => {
-                this.openLightbox(image.src, image.alt);
+                this.openLightbox(images, index);
             });
 
             imgContainer.appendChild(img);
@@ -186,8 +209,15 @@ export class ArticlePage {
         return container;
     }
 
-    openLightbox(src, alt) {
-        // Create lightbox overlay
+    openImageLightbox(src, alt) {
+        const singleImageArray = [{ src: src, alt: alt || 'Изображение' }];
+        this.openLightbox(singleImageArray, 0);
+    }
+
+    openLightbox(images, currentIndex) {
+        this.currentGallery = images;
+        this.currentImageIndex = currentIndex;
+
         const lightbox = document.createElement('div');
         lightbox.className = 'lightbox-overlay';
 
@@ -195,37 +225,119 @@ export class ArticlePage {
         lightboxContent.className = 'lightbox-content';
 
         const img = document.createElement('img');
-        img.src = src;
-        img.alt = alt;
+        img.src = images[currentIndex].src;
+        img.alt = images[currentIndex].alt;
         img.className = 'lightbox-image';
+
+        const isMobile = window.innerWidth <= 768;
+        
+        if (isMobile) {
+            img.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const rect = img.getBoundingClientRect();
+                const clickX = e.clientX - rect.left;
+                const imageWidth = rect.width;
+                
+                if (clickX < imageWidth * 0.3) {
+                    this.navigateGallery(-1, img);
+                } else if (clickX > imageWidth * 0.3) {
+                    this.navigateGallery(1, img);
+                }
+            });
+        }
 
         const closeBtn = document.createElement('button');
         closeBtn.className = 'lightbox-close';
         closeBtn.innerHTML = '&times;';
         closeBtn.addEventListener('click', () => {
-            document.body.removeChild(lightbox);
+            this.closeLightbox(lightbox);
         });
 
-        // Close on overlay click
+        const prevBtn = document.createElement('button');
+        prevBtn.className = 'lightbox-nav lightbox-prev';
+        prevBtn.innerHTML = '◄';
+        prevBtn.addEventListener('click', () => {
+            this.navigateGallery(-1, img);
+        });
+
+        const nextBtn = document.createElement('button');
+        nextBtn.className = 'lightbox-nav lightbox-next';
+        nextBtn.innerHTML = '►';
+        nextBtn.addEventListener('click', () => {
+            this.navigateGallery(1, img);
+        });
+
+        if (isMobile) {
+            prevBtn.style.display = 'none';
+            nextBtn.style.display = 'none';
+        }
+
+        const counter = document.createElement('div');
+        counter.className = 'lightbox-counter';
+        counter.textContent = `${currentIndex + 1} / ${images.length}`;
+
+        this.updateNavigationButtons(prevBtn, nextBtn);
+
         lightbox.addEventListener('click', (e) => {
             if (e.target === lightbox) {
-                document.body.removeChild(lightbox);
+                this.closeLightbox(lightbox);
             }
         });
 
-        // Close on Escape key
         const handleKeyPress = (e) => {
             if (e.key === 'Escape') {
-                document.body.removeChild(lightbox);
-                document.removeEventListener('keydown', handleKeyPress);
+                this.closeLightbox(lightbox);
+            } else if (e.key === 'ArrowLeft') {
+                this.navigateGallery(-1, img);
+            } else if (e.key === 'ArrowRight') {
+                this.navigateGallery(1, img);
             }
         };
         document.addEventListener('keydown', handleKeyPress);
 
+        this.lightboxKeyHandler = handleKeyPress;
+        this.lightboxElement = lightbox;
+        this.lightboxImg = img;
+        this.lightboxCounter = counter;
+        this.lightboxPrevBtn = prevBtn;
+        this.lightboxNextBtn = nextBtn;
+
         lightboxContent.appendChild(img);
         lightboxContent.appendChild(closeBtn);
+        lightboxContent.appendChild(prevBtn);
+        lightboxContent.appendChild(nextBtn);
+        lightboxContent.appendChild(counter);
         lightbox.appendChild(lightboxContent);
         document.body.appendChild(lightbox);
+    }
+
+    navigateGallery(direction, img) {
+        this.currentImageIndex += direction;
+        
+        if (this.currentImageIndex < 0) {
+            this.currentImageIndex = this.currentGallery.length - 1;
+        } else if (this.currentImageIndex >= this.currentGallery.length) {
+            this.currentImageIndex = 0;
+        }
+
+        const currentImage = this.currentGallery[this.currentImageIndex];
+        img.src = currentImage.src;
+        img.alt = currentImage.alt;
+        
+        this.lightboxCounter.textContent = `${this.currentImageIndex + 1} / ${this.currentGallery.length}`;
+        this.updateNavigationButtons(this.lightboxPrevBtn, this.lightboxNextBtn);
+    }
+
+    updateNavigationButtons(prevBtn, nextBtn) {
+        prevBtn.style.opacity = this.currentImageIndex === 0 ? '0.5' : '1';
+        nextBtn.style.opacity = this.currentImageIndex === this.currentGallery.length - 1 ? '0.5' : '1';
+    }
+
+    closeLightbox(lightbox) {
+        document.body.removeChild(lightbox);
+        if (this.lightboxKeyHandler) {
+            document.removeEventListener('keydown', this.lightboxKeyHandler);
+        }
     }
 
     navigateToArticles() {
